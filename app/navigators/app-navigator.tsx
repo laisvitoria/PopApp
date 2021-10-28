@@ -25,7 +25,7 @@ import { navigationRef } from "./navigation-utilities"
  */
 export type NavigatorParamList = {
   welcome: undefined
-  demo: undefined
+  list: undefined
   demoList: undefined
 }
 
