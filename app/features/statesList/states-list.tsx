@@ -1,8 +1,10 @@
-import React, { FC } from "react";
+import React, { FC, /* useState, */ useEffect } from "react";
 import { View, Text, FlatList, TextStyle, ViewStyle } from "react-native";
-import { ItemList } from "../../components/item-list/item-list";
 
-import { color, spacing } from "../../theme"
+import ApiLocalization from "../../services/api/api-localization"
+
+import { ItemList } from "../../components/item-list/item-list";
+import { color, spacing } from "../../theme";
 
 export type Props = {
     name: string;
@@ -74,6 +76,22 @@ const ContainerListStyle: ViewStyle = {
 }
 
 export const StatesList: FC = () => {
+    // const [listStates, setListStates] = useState();
+    const api = ApiLocalization.create()
+
+    useEffect(() => {
+        async function getStatesIbge() {
+            await api.getStates()
+            .then((res) => {
+                console.log("success", res)
+            })
+            .catch((err) => {
+                console.log("error", err)
+            })
+        }
+        getStatesIbge()
+    }, [])
+
     return (
         <View style={ContainerListStyle}>
             <Text style={TitleListStyle}>

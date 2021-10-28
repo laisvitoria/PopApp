@@ -47,9 +47,9 @@ export class Api {
   /**
    * Gets a list of users.
    */
-  async getUsers(): Promise<Types.GetUsersResult> {
+  async getStates(): Promise<Types.GetStatesResult> {
     // make the api call
-    const response: ApiResponse<any> = await this.apisauce.get(`/users`)
+    const response: ApiResponse<any> = await this.apisauce.get(`/localidades/estados`)
 
     // the typical ways to die when calling an api
     if (!response.ok) {
@@ -60,15 +60,16 @@ export class Api {
     const convertUser = (raw) => {
       return {
         id: raw.id,
-        name: raw.name,
+        sigla: raw.sigla,
+        nome: raw.nome,
       }
     }
 
     // transform the data into the format we are expecting
     try {
       const rawUsers = response.data
-      const resultUsers: Types.User[] = rawUsers.map(convertUser)
-      return { kind: "ok", users: resultUsers }
+      const resultUsers: Types.State[] = rawUsers.map(convertUser)
+      return { kind: "ok", states: resultUsers }
     } catch {
       return { kind: "bad-data" }
     }
@@ -78,9 +79,9 @@ export class Api {
    * Gets a single user by ID
    */
 
-  async getUser(id: string): Promise<Types.GetUserResult> {
+  async getState(sigla: string): Promise<Types.GetStateResult> {
     // make the api call
-    const response: ApiResponse<any> = await this.apisauce.get(`/users/${id}`)
+    const response: ApiResponse<any> = await this.apisauce.get(`localidades/estados/${sigla}`)
 
     // the typical ways to die when calling an api
     if (!response.ok) {
@@ -90,11 +91,12 @@ export class Api {
 
     // transform the data into the format we are expecting
     try {
-      const resultUser: Types.User = {
+      const resultUser: Types.State = {
         id: response.data.id,
-        name: response.data.name,
+        sigla: response.data.sigla,
+        nome: response.data.nome,
       }
-      return { kind: "ok", user: resultUser }
+      return { kind: "ok", state: resultUser }
     } catch {
       return { kind: "bad-data" }
     }
