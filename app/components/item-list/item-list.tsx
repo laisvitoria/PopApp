@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { View, Text, ViewStyle, TextStyle } from "react-native";
+import { View, Text, ViewStyle, TextStyle, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-import { color, spacing } from "../../theme"
+import { color, spacing } from "../../theme";
 
 const ItemStyle: ViewStyle = {
     paddingVertical: spacing[2],
@@ -46,9 +46,14 @@ const GradientStyle: ViewStyle = {
     justifyContent: "center"
 }
 
-export const ItemList: FC = () => {
+export type Props = {
+    stateName: string;
+    onPress: any
+}
+
+export const ItemList: FC<Props> = ({ stateName, onPress }) => {
     return (
-        <View style={ItemStyle}>
+        <TouchableOpacity style={ItemStyle} onPress={onPress}>
             <View>
                 <LinearGradient
                     colors={["#e6e6e6", "#00396f"]}
@@ -57,7 +62,7 @@ export const ItemList: FC = () => {
                     <Text style={NumberItemStyle}>1</Text>
                 </LinearGradient>
             </View>
-            <Text style={StateNameStyle}>Nome do estado</Text>
-        </View>
+            <Text style={StateNameStyle}>{stateName}</Text>
+        </TouchableOpacity>
     )
 }

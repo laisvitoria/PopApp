@@ -1,66 +1,25 @@
 import React, { FC, /* useState, */ useEffect } from "react";
 import { View, Text, FlatList, TextStyle, ViewStyle } from "react-native";
+import { connect } from "react-redux"; // função que recebe um estado e retorna apenas o que precisamos
 
 import ApiLocalization from "../../services/api/api-localization"
 
 import { ItemList } from "../../components/item-list/item-list";
 import { color, spacing } from "../../theme";
 
+import { StateType } from "../../store/reducers/states";
+import * as StatesActions from "../../store/actions/states"
+
 export type Props = {
-    name: string;
+    states: StateType[];
+    toggleState: any
 };
 
-export type StateType = {
-    id: string,
-    title: string,
-};
-
-const states: StateType[] = [
-    {
-      id: "1",
-      title: "Sergipe",
-    },
-    {
-      id: "2",
-      title: "Bahia",
-    },
-    {
-      id: "3",
-      title: "Pernambuco",
-    },
-    {
-      id: "4",
-      title: "Pernambuco",
-    },
-    {
-      id: "5",
-      title: "Pernambuco",
-    },
-    {
-      id: "6",
-      title: "Pernambuco",
-    },
-    {
-      id: "7",
-      title: "Pernambuco",
-    },
-    {
-      id: "8",
-      title: "Pernambuco",
-    },
-    {
-      id: "9",
-      title: "Pernambuco",
-    },
-    {
-      id: "10",
-      title: "Pernambuco",
-    },
-    {
-      id: "11",
-      title: "Pernambuco",
-    },
-];
+export type typeStateConnect = {
+  reducerStates: { 
+    selectedState: any, states: StateType[]
+  }
+}
 
 const TitleListStyle: TextStyle = {
     color: color.palette.deepPurple,
@@ -75,8 +34,7 @@ const ContainerListStyle: ViewStyle = {
     paddingBottom: 180
 }
 
-export const StatesList: FC = () => {
-    // const [listStates, setListStates] = useState();
+const StatesList: FC<Props> = ({ states, toggleState }) => {
     const api = ApiLocalization.create()
 
     useEffect(() => {
@@ -100,9 +58,18 @@ export const StatesList: FC = () => {
             <FlatList
                 showsVerticalScrollIndicator={false}
                 data={states}
-                renderItem={() => <ItemList />}
+                renderItem={(items) =>
+                  <ItemList stateName={items.item.title} onPress={() => toggleState(items.item)}/>
+                }
                 keyExtractor={item => item.id}
             />
         </View>
     )
 }
+
+const mapStateToProps = (state: typeStateConnect) => ({ states: state.reducerStates.states })
+const mapDispatchToProps = dispatch => ({// dispatch dispara açoes para o redux -> o que for disparado é ouvido por todo o redux
+  toggleState: (item) => dispatch(StatesActions.toggleState(item))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(StatesList);
