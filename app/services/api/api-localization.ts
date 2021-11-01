@@ -11,7 +11,7 @@ const create = (config: ApiConfig = DEFAULT_API_CONFIG) => {
     },
   })
 
-  const getStates = () => api.get(`/localidades/estados`)
+  const getStates = () => api.get(`/localidades/estados?orderBy=nome`)
 
   const getState = (sigla: string) => api.get(`/localidades/estados/${sigla}`)
 

@@ -1,5 +1,7 @@
-import { call } from "redux-saga/effects"
-import apiLocalization from "../services/api/api-localization"
+import { call, put } from "redux-saga/effects";
+import apiLocalization from "../services/api/api-localization";
+
+import { loadStates } from "../store/actions/states";
 
 const api = apiLocalization.create()
 
@@ -7,8 +9,8 @@ export function* load(){
     try {
         const response = yield call(api.getStates)
 
-        yield console.log(response.data)
+        yield put(loadStates(response.data))
     } catch (err) {
-        yield console.log(err)
+        yield put(err)
     }
 }
