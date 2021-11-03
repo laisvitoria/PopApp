@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { View } from "react-native";
 import StatesList from "../../features/statesList/states-list"
 
-import { StateType } from "../../store/reducers/states"
+import { StateType } from "../../features/statesList/reducers-states"
 
 export type Props = {
     states: StateType[];

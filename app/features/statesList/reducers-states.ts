@@ -19,7 +19,6 @@ const INITIAL_STATE = {
 }
 
 export default function reducerStates(initialState = INITIAL_STATE, action) {
-    console.log(action)
 
     if (action.type === "TOGGLE_STATE") {
         return {

@@ -1,7 +1,7 @@
 import { call, put } from "redux-saga/effects";
-import apiLocalization from "../services/api/api-localization";
+import apiLocalization from "../../services/api/api-localization";
 
-import { loadStates } from "../store/actions/states";
+import { loadStates } from "./actions-states";
 
 const api = apiLocalization.create()
 

@@ -1,6 +1,6 @@
 import { all, takeLatest } from "redux-saga/effects";
 
-import { load } from "./states-sagas";
+import { load } from "../features/statesList/states-sagas";
 
 export default function* rootSaga() {
     return yield all([

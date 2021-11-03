@@ -5,8 +5,8 @@ import { connect } from "react-redux"; // função que recebe um estado e retorn
 import { ItemList } from "../../components/item-list/item-list";
 import { color, spacing } from "../../theme";
 
-import { StateType } from "../../store/reducers/states";
-import * as StatesActions from "../../store/actions/states";
+import { StateType } from "./reducers-states";
+import * as StatesActions from "./actions-states";
 
 export type Props = {
     states: StateType[];
@@ -48,7 +48,7 @@ const StatesList: FC<Props> = ({ states, toggleState, loadStates }) => {
                 showsVerticalScrollIndicator={false}
                 data={states}
                 renderItem={(items) =>
-                  <ItemList stateName={items.item.nome} onPress={() => toggleState(items.item)}/>
+                  <ItemList stateName={items.item.nome} stateIndex={items.index} onPress={() => toggleState(items.item)}/>
                 }
                 keyExtractor={item => item.sigla}
             />

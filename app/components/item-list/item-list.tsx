@@ -48,10 +48,11 @@ const GradientStyle: ViewStyle = {
 
 export type Props = {
     stateName: string;
+    stateIndex: number;
     onPress: any
 }
 
-export const ItemList: FC<Props> = ({ stateName, onPress }) => {
+export const ItemList: FC<Props> = ({ stateName, stateIndex, onPress }) => {
     return (
         <TouchableOpacity style={ItemStyle} onPress={onPress}>
             <View>
@@ -59,7 +60,7 @@ export const ItemList: FC<Props> = ({ stateName, onPress }) => {
                     colors={["#e6e6e6", "#00396f"]}
                     style={GradientStyle}
                 >
-                    <Text style={NumberItemStyle}>1</Text>
+                    <Text style={NumberItemStyle}>{stateIndex+1}</Text>
                 </LinearGradient>
             </View>
             <Text style={StateNameStyle}>{stateName}</Text>
