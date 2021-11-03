@@ -1,6 +1,7 @@
 import React, { FC, /* useState, */ useEffect } from "react";
 import { View, Text, FlatList, TextStyle, ViewStyle } from "react-native";
 import { connect } from "react-redux"; // função que recebe um estado e retorna apenas o que precisamos
+import { createSelector } from "reselect";
 
 import { ItemList } from "../../components/item-list/item-list";
 import { color, spacing } from "../../theme";
@@ -11,7 +12,8 @@ import * as StatesActions from "./actions-states";
 export type Props = {
     states: StateType[];
     toggleState: any,
-    loadStates: any
+    loadStates: any,
+    total: any
 };
 
 export type typeStateConnect = {
@@ -33,7 +35,7 @@ const ContainerListStyle: ViewStyle = {
     paddingBottom: 180
 }
 
-const StatesList: FC<Props> = ({ states, toggleState, loadStates }) => {
+const StatesList: FC<Props> = ({ states, toggleState, loadStates, total }) => {
 
     useEffect(() => {
         loadStates()
@@ -42,7 +44,7 @@ const StatesList: FC<Props> = ({ states, toggleState, loadStates }) => {
     return (
         <View style={ContainerListStyle}>
             <Text style={TitleListStyle}>
-                Listagem de estados
+                Listagem de {total} estados
             </Text>
             <FlatList
                 showsVerticalScrollIndicator={false}
@@ -56,7 +58,18 @@ const StatesList: FC<Props> = ({ states, toggleState, loadStates }) => {
     )
 }
 
-const mapStateToProps = (state: typeStateConnect) => ({ states: state.reducerStates.states })
+// usamos o selector quando desejamos fazer algum calculo baseado no estado da aplicação
+const calculateTotal = createSelector(
+    state => state.states,
+    state => {
+        return state?.reduce((initialValue) => initialValue + 1, 0)
+    }
+)
+
+const mapStateToProps = (state: typeStateConnect) => ({
+    states: state.reducerStates.states,
+    total: calculateTotal(state.reducerStates)
+})
 const mapDispatchToProps = dispatch => ({// dispatch dispara açoes para o redux -> o que for disparado é ouvido por todo o redux
   toggleState: (item) => dispatch(StatesActions.toggleState(item)),
   loadStates: () => dispatch(StatesActions.loadStates())
