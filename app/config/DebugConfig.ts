@@ -1,3 +1,3 @@
 export default {
-    useStorybook: true,
+    useStorybook: false,
 }

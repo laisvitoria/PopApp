@@ -32,7 +32,9 @@ const TitleListStyle: TextStyle = {
 }
 
 const ContainerListStyle: ViewStyle = {
-    paddingBottom: 180
+    paddingBottom: 130,
+    width: "100%",
+    justifyContent: "center",
 }
 
 const StatesList: FC<Props> = ({ states, toggleState, loadStates, total }) => {
